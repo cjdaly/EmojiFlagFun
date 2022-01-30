@@ -21,14 +21,24 @@ def print_flag(flag):
 print_flag(flag_US)
 
 int_A = 65
-int_Box_A = 127462
+int_A_block = 127462
 
-print("0(+65)\t{} = {}".format(chr(int_A), chr(int_Box_A)))
+print("0(+{})\t{} = {} (+{})".format(
+    int_A, chr(int_A), chr(int_A_block), int_A_block))
 
 for i in range(1, 26):
-    print("{}\t{} = {}".format(i, chr(int_A+i), chr(int_Box_A+i)))
+    lt = chr(int_A+i) ; bl = chr(int_A_block+i)
+    print("{}\t{} = {}".format(i, lt, bl))
 
-flag_SE = "{}{}".format(chr(int_Box_A+18), chr(int_Box_A+4))
+letter_to_block = {chr(i+int_A):chr(i+int_A_block) for i in range(26)}
+def L2B(letter):
+    return letter_to_block[letter]
+#
+block_to_letter = {v:k for k,v in letter_to_block.items()}
+def B2L(block):
+    return block_to_letter[block]
+
+flag_SE = "{}{}".format(letter_to_block['S'], L2B('E'))
 print_flag(flag_SE)
 
 flag_ES = flag_SE[::-1]
@@ -36,5 +46,6 @@ print_flag(flag_ES)
 
 for y in range(26):
     for x in range(26):
-        print("{}{} ".format(chr(int_Box_A+y), chr(int_Box_A+x)), end='')
+        print("{}{} ".format(chr(int_A_block+y), chr(int_A_block+x)), end='')
     print()
+
