@@ -1,4 +1,4 @@
-# FlagFun
+# Emoji Flag Fun
 
 Inspired by a [blog post about flag emoji](https://davidamos.dev/why-cant-you-reverse-a-flag-emoji/) (via [HN](https://news.ycombinator.com/item?id=30104292)).
 
