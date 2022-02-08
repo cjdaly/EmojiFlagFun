@@ -23,29 +23,28 @@ def L2B(letter):
     return _letter_to_block[letter]
 
 HTML_template = "<html><head></head><body>{}</body></html>"
+def HTML_response(text, status=200):
+    output = HTML_template.format(text)
+    return Response(output, status, mimetype="text/html")
+
 def CC_item(cc):
     return "{} : {}{} - {}".format(cc, L2B(cc[0]), L2B(cc[1]) , CC_to_Name[cc])
 
 @app.route("/", methods=["GET"])
 def root():
-    output = HTML_template.format("Hello World!")
-    return Response(output, mimetype="text/html")
+    return HTML_response("Hello from Emoji Flag Fun!")
 
 @app.route("/<CC>", methods=["GET"])
 def cc(CC):
     CC = CC.upper()
-    txt = ""
     if len(CC) == 1 and CC.isalpha():
+        text = ""
         for k in CC_to_Name.keys():
             if k[0] == CC:
-                txt += CC_item(k) + "<br/>\n"
-        output = HTML_template.format(txt)
-        return Response(output, mimetype="text/html")
+                text += CC_item(k) + "<br/>\n"
+        return HTML_response(text)
     elif CC in CC_to_Name:
-        txt = CC_item(CC)
-        output = HTML_template.format(txt)
-        return Response(output, mimetype="text/html")
+        return HTML_response(CC_item(CC))
     else:
-        txt = "Country code '{}' not found!".format(CC)
-        output = HTML_template.format(txt)
-        return Response(output, 404)
+        text = "Country code '{}' not found!".format(CC)
+        return HTML_response(text, 404)
